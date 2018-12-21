@@ -34,7 +34,7 @@
        ;; Extract the frame position from the marker.
        gud-last-frame
        (cons (substring gud-rubydb-marker-acc (match-beginning 1) (match-end 1))
-             (string-to-int (substring gud-rubydb-marker-acc
+             (string-to-number (substring gud-rubydb-marker-acc
                                        (match-beginning 2)
                                        (match-end 2))))
 

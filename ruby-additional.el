@@ -147,7 +147,7 @@ Emacs to Ruby."
 	     (while (looking-at "[ \t]*\\([0-9a-fA-F]+\\)")
 	       (setq s (cons (match-string-no-properties 1) s))
 	       (goto-char (match-end 0))))
-	   (setq s (mapconcat (lambda (c) (format "%c" (string-to-int c 16)))
+	   (setq s (mapconcat (lambda (c) (format "%c" (string-to-number c 16)))
 			      (nreverse s) ""))
 	   (delete-region b e)
 	   (insert s))
