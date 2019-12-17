@@ -10,7 +10,7 @@
 ;; URL: https://github.com/knu/ruby-electric.el
 ;; Keywords: languages ruby
 ;; License: The same license terms as Ruby
-;; Version: 2.3.1
+;; Version: 2.3.2
 
 ;;; Commentary:
 ;;
@@ -26,6 +26,11 @@
 ;;
 ;;     (eval-after-load "ruby-mode"
 ;;       '(add-hook 'ruby-mode-hook 'ruby-electric-mode))
+;;
+;; Or add the following line for enh-ruby-mode.
+;;
+;;     (eval-after-load "enh-ruby-mode"
+;;       '(add-hook 'enh-ruby-mode-hook 'ruby-electric-mode))
 ;;
 ;; Type M-x customize-group ruby-electric for configuration.
 
@@ -81,17 +86,18 @@
 
 (defun ruby-electric--modifier-keyword-at-point-p ()
   "Test if there is a modifier keyword at point."
-  (and (looking-at ruby-modifier-beg-symbol-re)
+  (and (not (looking-back "\\."))
+       (looking-at ruby-modifier-beg-symbol-re)
        (let ((end (match-end 1)))
-         (not (looking-back "\\."))
          (save-excursion
            (let ((indent1 (ruby-electric--try-insert-and-do "\n"
-                            (ruby-calculate-indent)))
+                            (ruby-electric-calculate-indent)))
                  (indent2 (save-excursion
                             (goto-char end)
                             (ruby-electric--try-insert-and-do " x\n"
-                              (ruby-calculate-indent)))))
-             (= indent1 indent2))))))
+                              (ruby-electric-calculate-indent)))))
+             (and indent1 indent2
+                  (= indent1 indent2)))))))
 
 (defconst ruby-block-mid-symbol-re
   (regexp-opt ruby-block-mid-keywords 'symbols))
@@ -243,6 +249,16 @@ enabled."
         (and command
              (call-interactively (setq this-command command))))))
 
+(defun ruby-electric-indent-line (&optional ignored)
+  (if (eq major-mode 'enh-ruby-mode)
+      (enh-ruby-indent-line ignored)
+    (ruby-indent-line ignored)))
+
+(defun ruby-electric-calculate-indent (&optional start-point)
+  (if (eq major-mode 'enh-ruby-mode)
+      (enh-ruby-calculate-indent start-point)
+    (ruby-calculate-indent start-point)))
+
 (defun ruby-electric-space/return (arg)
   (interactive "*P")
   (and (boundp 'sp-last-operation)
@@ -270,12 +286,12 @@ enabled."
                            (and (memq action allowed-actions)
                                 action))))))
            (cond ((eq action 'end)
-                  (ruby-indent-line)
+                  (ruby-electric-indent-line)
                   (save-excursion
                     (newline)
                     (ruby-electric-end)))
                  ((eq action 'reindent)
-                  (ruby-indent-line)))
+                  (ruby-electric-indent-line)))
            (ruby-electric-space/return-fallback)))
         ((and (eq this-original-command 'newline-and-indent)
               (ruby-electric-comment-at-point-p))
@@ -411,7 +427,7 @@ enabled."
               (insert " ")
               (save-excursion
                 (newline)
-                (ruby-indent-line t)))))
+                (ruby-electric-indent-line t)))))
       (t
        (if region-beginning
            (save-excursion
@@ -531,7 +547,7 @@ enabled."
    (t
     (ruby-electric-replace-region-or-insert)
     (if ruby-electric-autoindent-on-closing-char
-        (ruby-indent-line)))))
+        (ruby-electric-indent-line)))))
 
 (defun ruby-electric-bar(arg)
   (interactive "*P")
@@ -576,7 +592,7 @@ enabled."
   (save-excursion
     (if (eq (char-syntax (following-char)) ?w)
         (insert " "))
-    (ruby-indent-line t)))
+    (ruby-electric-indent-line t)))
 
 (provide 'ruby-electric)
 
