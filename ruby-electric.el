@@ -91,7 +91,8 @@
                             (goto-char end)
                             (ruby-electric--try-insert-and-do " x\n"
                               (ruby-calculate-indent)))))
-             (= indent1 indent2))))))
+             (and indent1 indent2
+                  (= indent1 indent2)))))))
 
 (defconst ruby-block-mid-symbol-re
   (regexp-opt ruby-block-mid-keywords 'symbols))
