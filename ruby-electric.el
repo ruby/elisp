@@ -7,7 +7,7 @@
 ;;          Jakub Kuźma <qoobaa@gmail.com>
 ;; Maintainer: Akinori MUSHA <knu@iDaemons.org>
 ;; Created: 6 Mar 2005
-;; URL: https://github.com/knu/ruby-electric.el
+;; URL: https://github.com/ruby/elisp
 ;; Keywords: languages ruby
 ;; License: The same license terms as Ruby
 ;; Version: 2.3.2
