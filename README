@@ -3,10 +3,10 @@ inf-ruby.el       program to run ruby under emacs
 ruby-mode.el      ruby mode for emacs
 rubydb2x.el       ruby debugger support for emacs 19.2x or before
 rubydb3x.el       ruby debugger support for emacs 19.3x or later
-ruby-electric.el  emacs minor mode providing electric commands
 ruby-additional.el ruby-mode extensions yet to be merged into Emacs
 
 Check out the following repositories also.
 
 - https://github.com/ruby-debug/
+- https://github.com/ruby/elisp-ruby-electric
 - https://github.com/ruby/elisp-rdoc-mode
