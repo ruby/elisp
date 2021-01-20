@@ -23,12 +23,15 @@
 
      (defun ruby-insert-end ()
        (interactive)
-       (if (eq (char-syntax (preceding-char)) ?w)
-           (insert " "))
-       (insert "end")
+       (let ((s (save-excursion (backward-up-list) (matching-paren (char-after)))))
+	 (if s
+	     (insert (char-to-string s))
+	   (if (eq (char-syntax (preceding-char)) ?w)
+               (insert " "))
+	   (insert "end")
+           (if (eq (char-syntax (following-char)) ?w)
+               (insert " "))))
        (save-excursion
-         (if (eq (char-syntax (following-char)) ?w)
-             (insert " "))
          (ruby-indent-line t)
          (end-of-line)))
 
