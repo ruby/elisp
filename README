@@ -3,6 +3,7 @@ ruby-mode.el      ruby mode for emacs
 rubydb2x.el       ruby debugger support for emacs 19.2x or before
 rubydb3x.el       ruby debugger support for emacs 19.3x or later
 ruby-additional.el ruby-mode extensions yet to be merged into Emacs
+ruby-mkmf-log-mode.el mkmf.log viewing mode
 
 Check out the following repositories also.
 
