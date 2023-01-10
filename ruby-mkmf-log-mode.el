@@ -19,7 +19,8 @@
     "have_framework" "have_struct_member"
     "have_type" "find_type" "have_const"
     "check_sizeof" "check_signedness" "convertible_int"
-    "what_type?" "find_executable" "pkg_config")
+    "what_type?" "find_executable" "pkg_config"
+    "append_cflags" "append_cppflags" "append_ldflags")
   "Method names defined in mkmf.rb and shown at messages")
 
 (defconst ruby-mkmf-log-methods-re
