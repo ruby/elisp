@@ -14,19 +14,16 @@
   :group 'languages)
 
 (defconst ruby-mkmf-log-methods
-  '("have_macro" "have_library" "find_library"
-    "have_func" "have_var" "have_header" "find_header"
-    "have_framework" "have_struct_member"
-    "have_type" "find_type" "have_const"
-    "check_sizeof" "check_signedness" "convertible_int"
-    "what_type?" "find_executable" "pkg_config"
-    "append_cflags" "append_cppflags" "append_ldflags")
-  "Method names defined in mkmf.rb and shown at messages")
+  '("convertible_int" "what_type?"  "pkg_config")
+  "Method names defined in mkmf.rb and shown at messages in addition to have_/check_/find_ methods")
 
 (defconst ruby-mkmf-log-methods-re
   (concat
    "^\\(?:"
+   "\\(?:"
+   "\\(?:have_\\|check_\\|find_\\)[_a-zA-Z0-9]*\\??\\|"
    (regexp-opt ruby-mkmf-log-methods)
+   "\\)"
    ": \\)?checking .*\\.\\.\\. \\(--------------------\\) \\(.*\\)")
   "Regexp to match the beginning of each checks")
 
