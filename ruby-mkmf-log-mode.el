@@ -15,7 +15,8 @@
 
 (defconst ruby-mkmf-log-methods
   '("convertible_int" "what_type?"  "pkg_config")
-  "Method names defined in mkmf.rb and shown at messages in addition to have_/check_/find_ methods")
+  "Method names defined in mkmf.rb and shown at messages in
+addition to have_/check_/find_ methods")
 
 (defconst ruby-mkmf-log-methods-re
   (concat
@@ -36,10 +37,14 @@
 
 (defcustom ruby-mkmf-log-check-heading-face
   '(:weight bold)
-  "Alist of face for check heading")
+  "Alist of face for check heading"
+  :type '(face)
+  :group 'ruby-mkmf-log-mode)
 (defcustom ruby-mkmf-log-check-content-face
   '(:height 0.8)
-  "Alist of face for check content")
+  "Alist of face for check content"
+  :type '(face)
+  :group 'ruby-mkmf-log-mode)
 
 (defun ruby-mkmf-log-toggle-visible ()
   "Toggle visibility of the current check"
@@ -72,12 +77,12 @@
    (overlays-in start end)))
 
 (defun ruby-mkmf-log-make-overlay (start end &optional front-advance rear-advance no-keymap)
-  (setq o (make-overlay start end nil front-advance rear-advance))
-  (overlay-put o 'category 'ruby-mkmf-log)
-  (overlay-put o 'hide-ruby-mkmf-log t)
-  (unless no-keymap
-    (overlay-put o 'keymap ruby-mkmf-log-overlay-keymap))
-  o)
+  (let ((o (make-overlay start end nil front-advance rear-advance)))
+    (overlay-put o 'category 'ruby-mkmf-log)
+    (overlay-put o 'hide-ruby-mkmf-log t)
+    (unless no-keymap
+      (overlay-put o 'keymap ruby-mkmf-log-overlay-keymap))
+    o))
 
 (defun ruby-mkmf-log-decorate (&optional start end)
   "Decorate Ruby mkmf checks"
@@ -115,7 +120,7 @@
     (when (re-search-forward "^\\(extconf\\.h\\) is:\n/\\* begin \\*/\n\\(\\(?:.*\n\\)*\\)/\\* end \\*/$" end t)
       (let ((o (ruby-mkmf-log-make-overlay (match-beginning 1) (match-end 1))))
 	(overlay-put o 'face 'compilation-info))
-      (let ((b (match-beginning 2)) (e (match-end 2)) o)
+      (let ((b (match-beginning 2)) (e (match-end 2)))
 	(goto-char b)
 	(while (re-search-forward "^ *[1-9][0-9]*: " e t)
 	  (let ((o (ruby-mkmf-log-make-overlay (match-beginning 0) (match-end 0))))
