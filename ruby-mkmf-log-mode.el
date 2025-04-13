@@ -22,7 +22,7 @@ addition to have_/check_/find_ methods")
   (concat
    "^\\(?:"
    "\\(?:"
-   "\\(?:test_\\|have_\\|check_\\|find_\\)[_a-zA-Z0-9]*\\??\\|"
+   "\\(?:test\\|have\\|check\\|find\\|append\\)_[_a-zA-Z0-9]*\\??\\|"
    (regexp-opt ruby-mkmf-log-methods)
    "\\)"
    ": \\)?checking .*?\\(?: in \\(.*\\)\\)?\\.\\.\\. \\(--------------------\\) \\(.*\\)")
